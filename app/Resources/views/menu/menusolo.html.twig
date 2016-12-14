@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} {{ menusolo.name }} {% endblock %}
+{% block body %}
+<h1>{{ menusolo.name }} </h1>
+<p>{{ menusolo.description }}
+{{ menusolo.ingredients }}</p>
+
+
+<h1> Notes attribuées</h1>
+  <ul>
+      {% for menulike in allnotes %}
+          <li>
+            <h4><b>Note : {{ menulike.rating }}</b></h4>
+            <h4>Utilisateur : {{ menulike.user }}</h4>
+            <p>Commentaire : {{ menulike.commentaire }}
+          </li>
+      {% endfor %}
+  </ul>
+
+<h1> Noter le menu </h1>
+{{ form(form) }}
+{% endblock %}
