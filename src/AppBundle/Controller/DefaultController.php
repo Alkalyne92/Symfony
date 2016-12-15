@@ -58,6 +58,32 @@ class DefaultController extends Controller
 
 
     /**
+     * @Route("/menu/nouveaumenu", name="nouveau_menu")
+     */
+    public function nouveaumenuAction(Request $request)
+    {
+
+       $newmenu = new Menu();
+
+       $form = $this->createForm(NewMenuType::class, $newmenu);
+
+     $form->handleRequest($request);
+     if ($form->isSubmitted() && $form->isValid())
+     {
+       $newmenu = $form->getData();
+       $em = $this->getDoctrine()->getManager();
+       // tells Doctrine you want to (eventually) save the Product (no queries yet)
+       $em->persist($newmenu);
+       // actually executes the queries (i.e. the INSERT query)
+       $em->flush();
+       return $this->redirectToRoute('menu');
+     }
+        return $this->render('menu/nouveaumenu.html.twig', array('form' => $form->createView()));
+
+
+    }
+
+    /**
      * @Route("/menu/{id}", name="menusolo_name")
      */
     public function menusoloAction(Request $request, $id)

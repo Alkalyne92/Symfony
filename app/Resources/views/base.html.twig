@@ -6,8 +6,16 @@
         {% block stylesheets %} {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    {% block retour %}
+    <h4>
+          <a href="{{ path('menu') }}">
+              Retour Homepage
+          </a>
+    </h4>
+    {% endblock retour %}
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
