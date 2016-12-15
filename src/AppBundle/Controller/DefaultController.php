@@ -66,11 +66,9 @@ class DefaultController extends Controller
        ->getRepository('AppBundle:Menu')
        ->findMenuById($id);
 
-       $allnotes = $this
-      ->getDoctrine()
-      ->getRepository('AppBundle:MenuLike')
-      ->toutesLesNotes($menusolo);
-
+       //$allnotes = $this->getDoctrine()->getRepository('AppBundle:MenuLike')->toutesLesNotes($menusolo);
+       $allnotes = $this->get('app.menu_like_service')->allnotes($menusolo);
+       $moyenne = $this->get('app.menu_like_service')->moyennedesnotes($menusolo);
 
        $menulike = new MenuLike();
 
@@ -90,7 +88,13 @@ class DefaultController extends Controller
 
 
 
-        return $this->render('menu/menusolo.html.twig', array('menusolo' => $menusolo, 'menulike' => $menulike, 'allnotes' => $allnotes, 'form' => $rateform->createView()));
+        return $this->render('menu/menusolo.html.twig', array(
+                                                                'menusolo' => $menusolo,
+                                                                'menulike' => $menulike,
+                                                                'allnotes' => $allnotes,
+                                                                'form'     => $rateform->createView(),
+                                                                'moyenne'  => $moyenne
+                                                                  ));
     }
 
 

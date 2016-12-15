@@ -4,6 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-    app.print_counter:
-      class: AppBundle\Services\PrintCounter
-      arguments: ['@logger']
+    app.menu_like_service:
+      class: AppBundle\Services\MenuLikeService
+      arguments: ['@doctrine.orm.entity_manager', '@doctrine']

@@ -24,11 +24,12 @@ class MenuLikeRepository extends EntityRepository
     public function moyenneDesNotes($menusolo)
     {
       $query = $this->createQueryBuilder('menulike')
+        ->select('AVG(menulike.rating)')
         ->where('menulike.menuassociated = :menuassociated')
         ->setParameter('menuassociated', $menusolo)
         ->getQuery();
 
-    return $query->getResult();
+    return $query->getSingleScalarResult();
     }
 
 }
