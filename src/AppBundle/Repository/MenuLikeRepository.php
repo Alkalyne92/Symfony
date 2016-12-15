@@ -32,4 +32,5 @@ class MenuLikeRepository extends EntityRepository
     return $query->getSingleScalarResult();
     }
 
+
 }

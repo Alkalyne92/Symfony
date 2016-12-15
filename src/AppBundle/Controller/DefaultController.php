@@ -70,23 +70,21 @@ class DefaultController extends Controller
        $allnotes = $this->get('app.menu_like_service')->allnotes($menusolo);
        $moyenne = $this->get('app.menu_like_service')->moyennedesnotes($menusolo);
 
+
        $menulike = new MenuLike();
 
        $rateform = $this->createForm(GiveNoteType::class, $menulike);
 
        $rateform->handleRequest($request);
        if ($rateform->isSubmitted() && $rateform->isValid())
-       {
-
-         $menulike = $rateform->getData();
-         $menulike->setMenuassociated($menusolo);
-         $em = $this->getDoctrine()->getManager();
-         $em->persist($menulike);
-         $em->flush();
-         return $this->redirectToRoute('menu');
-       }
-
-
+             {
+                   $menulike = $rateform->getData();
+                   $menulike->setMenuassociated($menusolo);
+                   $em = $this->getDoctrine()->getManager();
+                   $em->persist($menulike);
+                   $em->flush();
+                   return $this->redirectToRoute('menu');
+             }
 
         return $this->render('menu/menusolo.html.twig', array(
                                                                 'menusolo' => $menusolo,
@@ -97,6 +95,32 @@ class DefaultController extends Controller
                                                                   ));
     }
 
+      /**
+       * @Route("/menu/validation", name="validation_menu")
+       */
+      public function validationMenu()
+      {
+          $menus = $this
+         ->getDoctrine()
+         ->getRepository('AppBundle:Menu')
+         ->trierTousLesMenus();
 
+         $newmenu = new Menu();
+
+         $form = $this->createForm(NewMenuType::class, $newmenu);
+
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid())
+       {
+         $newmenu = $form->getData();
+         $em = $this->getDoctrine()->getManager();
+         // tells Doctrine you want to (eventually) save the Product (no queries yet)
+         $em->persist($newmenu);
+         // actually executes the queries (i.e. the INSERT query)
+         $em->flush();
+         return $this->redirectToRoute('menu');
+       }
+          return $this->render('menu/menu.html.twig', array('menus' => $menus, 'form' => $form->createView()));
+      }
 
 }
