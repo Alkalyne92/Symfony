@@ -9,6 +9,7 @@ use AppBundle\Entity\Menu;
 use AppBundle\Form\NewMenuType;
 use AppBundle\Entity\MenuLike;
 use AppBundle\Form\GiveNoteType;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
